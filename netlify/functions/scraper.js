@@ -19,7 +19,7 @@ async function extractMenuItems(page, restaurantName) {
 
 // Main function to orchestrate the scraping
 async function searchToastTab(location = 'Palo Alto, CA', usermsg = 'chinese', n_restaurants = 5, n_items = 5) {
-    const browser = await chromium.launch({ headless: false });
+    const browser = await chromium.launch({ headless: true });
     const page = await browser.newPage();
     let restaurants = [];
 
@@ -117,8 +117,6 @@ exports.handler = exports.handler = async function(event) {
     const n_restaurants = parseInt(params.n_restaurants, 10) || 5;
     const n_items = parseInt(params.n_items, 10) || 5;
 
-    const browser = await chromium.launch({ headless: true });
-    const page = await browser.newPage();
     let restaurants = [];
 
     try {
@@ -135,7 +133,5 @@ exports.handler = exports.handler = async function(event) {
             statusCode: 500,
             body: JSON.stringify({ error: 'Failed to scrape data' })
         };
-    } finally {
-        await browser.close();
     }
 };
