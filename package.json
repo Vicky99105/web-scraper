@@ -5,8 +5,7 @@
   "main": "netlify/functions/scraper.js", 
   "scripts": {
     "start": "node netlify/functions/scraper.js",
-    "build": "echo 'Build complete!'",
-    "postinstall": "npx playwright install chromium --with-deps"
+    "build": "echo 'Build complete!'"
   },
   "dependencies": {
     "playwright": "^1.34.0",
