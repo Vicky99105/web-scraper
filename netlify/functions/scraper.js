@@ -19,7 +19,7 @@ async function extractMenuItems(page, restaurantName) {
 
 // Main function to orchestrate the scraping
 async function searchToastTab(location = 'Palo Alto, CA', usermsg = 'chinese', n_restaurants = 5, n_items = 5) {
-    const browser = await chromium.launch({ headless: true });
+    const browser = await chromium.launch({ headless: false });
     const page = await browser.newPage();
     let restaurants = [];
 
@@ -109,7 +109,7 @@ async function searchToastTab(location = 'Palo Alto, CA', usermsg = 'chinese', n
 //     console.log(JSON.stringify(restaurants, null, 2));
 // });
 
-exports.handler = exports.handler = async function(event) {
+exports.handler = async function(event) {
     // Retrieve parameters from the query string
     const params = event.queryStringParameters;
     const location = params.location || 'Palo Alto, CA';
