@@ -104,7 +104,38 @@ async function searchToastTab(location = 'Palo Alto, CA', usermsg = 'chinese', n
     return restaurants;
 }
 
-// Usage
-searchToastTab().then(restaurants => {
-    console.log(JSON.stringify(restaurants, null, 2));
-});
+// // Usage
+// searchToastTab().then(restaurants => {
+//     console.log(JSON.stringify(restaurants, null, 2));
+// });
+
+exports.handler = exports.handler = async function(event) {
+    // Retrieve parameters from the query string
+    const params = event.queryStringParameters;
+    const location = params.location || 'Palo Alto, CA';
+    const usermsg = params.usermsg || 'chinese';
+    const n_restaurants = parseInt(params.n_restaurants, 10) || 5;
+    const n_items = parseInt(params.n_items, 10) || 5;
+
+    const browser = await chromium.launch({ headless: true });
+    const page = await browser.newPage();
+    let restaurants = [];
+
+    try {
+        
+        restaurants = searchToastTab()
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ restaurants })
+        };
+    } catch (error) {
+        console.error('Error during scraping:', error);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: 'Failed to scrape data' })
+        };
+    } finally {
+        await browser.close();
+    }
+};
