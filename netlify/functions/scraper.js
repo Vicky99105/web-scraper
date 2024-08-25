@@ -19,7 +19,7 @@ async function extractMenuItems(page, restaurantName) {
 
 // Main function to orchestrate the scraping
 async function searchToastTab(location = 'Palo Alto, CA', usermsg = 'chinese', n_restaurants = 5, n_items = 5) {
-    const browser = await chromium.launch({ headless: false });
+    const browser = await chromium.launch({ headless: true });
     const page = await browser.newPage();
     let restaurants = [];
 
